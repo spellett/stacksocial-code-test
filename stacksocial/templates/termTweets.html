@@ -1,0 +1,85 @@
+<html>
+  <head>
+    <title>
+    </title>
+    
+    <script src="{{ STATIC_URL }}scripts/jquery-1.9.1.min.js"></script>
+
+    <style>
+    .column {
+      width: 200px;
+    }
+
+    .headerCell {
+      float: left;
+      font-weight: bold;
+    }
+
+    .tableCell {
+      float: left;
+    }
+
+    .tweetRow {
+      clear: left;
+    }
+    </style>
+  </head>
+
+  <body>
+    <div id="formSection">
+      <form action="" type="POST">
+        <label for="query">Search:</label>
+        <input type="text" id="searchInput" name="query" />
+        <button type="button" onclick="search()">Submit</button>
+      </form>
+    </div>
+
+    <div id="resultSection">
+    {% if not tweets %}
+    <div>
+    It appears that there are no tweets regarding this term.
+    </div>
+    {% else %}
+    <div id="table">
+      <div id="tableHeader">
+        <div class="column headerCell">
+        User
+        </div>
+
+        <div class="column headerCell">
+        Created Date
+        </div>
+
+        <div class="column headerCell">
+        Content
+        </div>
+      </div>
+
+      {% for tweet in tweets %}
+      <div class="tweetRow">
+        <div class="column tableCell">
+          <a href="{% url 'user_page' tweet.user.screen_name %}">{{ tweet.user.screen_name }}</a>
+        </div>
+
+        <div class="column tableCell">
+        {{ tweet.created_date }}
+        </div>
+
+        <div class="column tableCell">
+        {{ tweet.text }}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    </div>
+
+    <script type="text/javascript">
+    function search()
+    {
+      var searchInput = $(#searchInput);
+      alert('test');
+    }
+    </script>
+  </body>
+</html>
