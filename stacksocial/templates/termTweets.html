@@ -54,22 +54,24 @@
         Content
         </div>
       </div>
+      
+      <div id="tableBody">
+        {% for tweet in tweets %}
+        <div class="tweetRow">
+          <div class="column tableCell">
+            <a href="{% url 'user_page' tweet.user.screen_name %}">{{ tweet.user.screen_name }}</a>
+          </div>
 
-      {% for tweet in tweets %}
-      <div class="tweetRow">
-        <div class="column tableCell">
-          <a href="{% url 'user_page' tweet.user.screen_name %}">{{ tweet.user.screen_name }}</a>
-        </div>
+          <div class="column tableCell">
+          {{ tweet.created_date }}
+          </div>
 
-        <div class="column tableCell">
-        {{ tweet.created_date }}
+          <div class="column tableCell">
+          {{ tweet.text }}
+          </div>
         </div>
-
-        <div class="column tableCell">
-        {{ tweet.text }}
-        </div>
+        {% endfor %}
       </div>
-      {% endfor %}
     </div>
     {% endif %}
     </div>
@@ -77,8 +79,17 @@
     <script type="text/javascript">
     function search()
     {
-      var searchInput = $(#searchInput);
-      alert('test');
+      var searchInput = $('#searchInput');
+
+      var data = {
+        'query': searchInput.val()
+      };
+  
+      alert(document.location);
+
+      /*$('#tableBody').load('', data, function() {
+        searchInput.val('');
+      });*/
     }
     </script>
   </body>

@@ -20,6 +20,10 @@
       clear: left;
     }
 
+    #userInfoSection {
+      margin-bottom: 20px;
+    }
+
     #userName {
       font-size: 25pt;
       font-weight: bold;
@@ -30,6 +34,9 @@
   <body>
     <div id="userInfoSection">
       <div id="profilePicture">
+        {% if profile_img_url %}
+        <img src="{{ profile_img_url }}" />
+        {% endif %}
       </div>
 
       <div id="userName">
