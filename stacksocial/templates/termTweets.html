@@ -1,96 +1,108 @@
-<html>
-  <head>
-    <title>
-    </title>
-    
-    <script src="{{ STATIC_URL }}scripts/jquery-1.9.1.min.js"></script>
+{% extends "pageBase.html" %}
 
-    <style>
-    .column {
-      width: 200px;
-    }
+{% block styles %}
+{{ block.super }}
 
-    .headerCell {
-      float: left;
-      font-weight: bold;
-    }
+<style>
+  .column {
+    width: 200px;
+  }
 
-    .tableCell {
-      float: left;
-    }
+  .evenRow {
+    background-color: #1BE084;
+  }
 
-    .tweetRow {
-      clear: left;
-    }
-    </style>
-  </head>
+  .headerCell {
+    float: left;
+    font-weight: bold;
+  }
 
-  <body>
-    <div id="formSection">
-      <form action="" type="POST">
-        <label for="query">Search:</label>
-        <input type="text" id="searchInput" name="query" />
-        <button type="button" onclick="search()">Submit</button>
-      </form>
-    </div>
+  .oddRow {
+    background-color: #E0FFB8;
+  }
 
-    <div id="resultSection">
-    {% if not tweets %}
-    <div>
-    It appears that there are no tweets regarding this term.
-    </div>
-    {% else %}
-    <div id="table">
-      <div id="tableHeader">
-        <div class="column headerCell">
-        User
-        </div>
+  .tableCell {
+    float: left;
+  }
 
-        <div class="column headerCell">
-        Created Date
-        </div>
+  .tweetRow {
+    clear: left;
+    float: left;
+  }
+</style>
+{% endblock styles %}
 
-        <div class="column headerCell">
-        Content
-        </div>
+{% block scripts %}
+<!--<script src="{{ STATIC_URL }}scripts/jquery-1.9.1.min.js"></script>-->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+{% endblock scripts %}
+
+{% block main %}
+{{ block.super }}
+
+<div id="formSection">
+  <form action="" type="POST" onsubmit="search(); return false;">
+    <label for="query">Search:</label>
+    <input type="text" id="searchInput" name="query" />
+    <button type="button" onclick="search()">Submit</button>
+  </form>
+</div>
+
+<div id="resultSection">
+  {% if not tweets %}
+  <div>
+  It appears that there are no tweets regarding this term.
+  </div>
+  {% else %}
+  <div id="table">
+    <div id="tableHeader">
+      <div class="column headerCell">
+      User
       </div>
+
+      <div class="column headerCell">
+      Created Date
+      </div>
+
+      <div class="column headerCell">
+      Content
+      </div>
+    </div>
       
-      <div id="tableBody">
-        {% for tweet in tweets %}
-        <div class="tweetRow">
-          <div class="column tableCell">
-            <a href="{% url 'user_page' tweet.user.screen_name %}">{{ tweet.user.screen_name }}</a>
-          </div>
-
-          <div class="column tableCell">
-          {{ tweet.created_date }}
-          </div>
-
-          <div class="column tableCell">
-          {{ tweet.text }}
-          </div>
+    <div id="tableBody">
+      {% for tweet in tweets %}
+      <div class="tweetRow {% cycle 'oddRow' 'evenRow'%}">
+        <div class="column tableCell">
+          <a href="{% url 'user_page' tweet.user.screen_name %}">{{ tweet.user.screen_name }}</a>
         </div>
-        {% endfor %}
+
+        <div class="column tableCell">
+        {{ tweet.created_at }}
+        </div>
+
+        <div class="column tableCell">
+        {{ tweet.text }}
+        </div>
       </div>
+      {% endfor %}
     </div>
-    {% endif %}
-    </div>
+  </div>
+  {% endif %}
+</div>
 
-    <script type="text/javascript">
-    function search()
-    {
-      var searchInput = $('#searchInput');
+<script type="text/javascript">
+  function search()
+  {
+    var searchInput = $('#searchInput');
 
-      var data = {
-        'query': searchInput.val()
-      };
+    var data = {
+      'query': searchInput.val()
+    };
   
-      alert(document.location);
-
-      /*$('#tableBody').load('', data, function() {
-        searchInput.val('');
-      });*/
-    }
-    </script>
-  </body>
-</html>
+    var url = document.location + " #tableBody";
+    $('#tableBody').load(url, data, function() {
+      searchInput.val('');
+    });
+  }
+</script>
+{% endblock main %}

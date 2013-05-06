@@ -1,84 +1,96 @@
-<html>
-  <head>
-    <title></title>
+{% extends "pageBase.html" %}
+
+{% block styles %}
+{{ block.super }}
+
+<style>
+  .column {
+    width: 200px;
+  }
     
-    <style>
-    .column {
-      width: 200px;
-    }
+  .evenRow {
+    background-color: #1BE084;
+  }
 
-    .headerCell {
-      float: left;
-      font-weight: bold;
-    }
+  .headerCell {
+    float: left;
+    font-weight: bold;
+  }
 
-    .tableCell {
-      float: left;
-    }
+  .oddRow {
+    background-color: #E0FFB8;
+  }
 
-    .tweetRow {
-      clear: left;
-    }
+  .tableCell {
+    float: left;
+  }
 
-    #userInfoSection {
-      margin-bottom: 20px;
-    }
+  .tweetRow {
+    clear: left;
+    float: left;
+  }
 
-    #userName {
-      font-size: 25pt;
-      font-weight: bold;
-    }
-    </style>
-  </head>
+  #userInfoSection {
+    margin-bottom: 20px;
+  }
 
-  <body>
-    <div id="userInfoSection">
-      <div id="profilePicture">
-        {% if profile_img_url %}
-        <img src="{{ profile_img_url }}" />
-        {% endif %}
-      </div>
+  #userName {
+    font-size: 25pt;
+    font-weight: bold;
+  }
+</style>
+{% endblock styles %}
 
-      <div id="userName">
-      {{ handle }}
-      </div>
-    </div>
-    {% if not tweets %}
-    <div>
-    It appears that this user has no tweets.
-    </div>
-    {% else %}
-    <div id="table">
-      <div id="tableHeader">
-        <div class="column headerCell">
-        User
-        </div>
+{% block main %}
+{{ block.super }}
 
-        <div class="column headerCell">
-        Created Date
-        </div>
-
-        <div class="column headerCell">
-        Content
-        </div>
-      </div>
-
-      {% for tweet in tweets %}
-      <div class="tweetRow">
-        <div class="column tableCell">
-        {{ tweet.user.screen_name }}
-        </div>
-
-        <div class="column tableCell">
-        {{ tweet.created_date }}
-        </div>
-
-        <div class="column tableCell">
-        {{ tweet.text }}
-        </div>
-      </div>
-      {% endfor %}
-    </div>
+<div id="userInfoSection">
+  <div id="profilePicture">
+    {% if profile_img_url %}
+    <img src="{{ profile_img_url }}" />
     {% endif %}
-  </body>
-</html>
+  </div>
+
+  <div id="userName">
+  {{ handle }}
+  </div>
+</div>
+
+{% if not tweets %}
+<div>
+It appears that this user has no tweets.
+</div>
+{% else %}
+<div id="table">
+  <div id="tableHeader">
+    <div class="column headerCell">
+    User
+    </div>
+
+    <div class="column headerCell">
+    Created Date
+    </div>
+
+    <div class="column headerCell">
+    Content
+    </div>
+  </div>
+
+  {% for tweet in tweets %}
+  <div class="tweetRow {% cycle 'oddRow' 'evenRow'%}">
+    <div class="column tableCell">
+    {{ tweet.user.screen_name }}
+    </div>
+
+    <div class="column tableCell">
+    {{ tweet.created_at }}
+    </div>
+
+    <div class="column tableCell">
+    {{ tweet.text }}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+{% endblock main %}

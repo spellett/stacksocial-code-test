@@ -16,6 +16,8 @@ def term_tweets(request):
   
     template_vars = {}
     template_vars['tweets'] = search_results.get('statuses')
+   
+    #if request.is_ajax():
 
     return render_to_response('termTweets.html', template_vars, context_instance=RequestContext(request))
 
