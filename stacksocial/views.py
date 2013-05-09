@@ -10,7 +10,7 @@ def index(request):
     #return render_to_response('index.html', template_vars, context_instance=RequestContext(request))
 
 def term_tweets(request):
-    query = request.REQUEST.get('query', 'stockr')
+    query = request.REQUEST.get('query', 'venice')
 
     search_results = twitter.get_tweets_by_term(query)
   

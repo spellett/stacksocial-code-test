@@ -1,5 +1,7 @@
 {% extends "pageBase.html" %}
 
+{% load extras %}
+
 {% block styles %}
 {{ block.super }}
 
@@ -28,6 +30,7 @@
   .tweetRow {
     clear: left;
     float: left;
+    width: 100%;
   }
 </style>
 {% endblock styles %}
@@ -81,7 +84,7 @@
         </div>
 
         <div class="column tableCell">
-        {{ tweet.text }}
+        {{ tweet.text|markup_twitter_handles|safe }}
         </div>
       </div>
       {% endfor %}
