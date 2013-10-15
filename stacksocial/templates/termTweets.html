@@ -32,22 +32,27 @@
     float: left;
     width: 100%;
   }
+
+  #formSection {
+    margin-bottom: 20px;
+  }
 </style>
 {% endblock styles %}
 
 {% block scripts %}
-<!--<script src="{{ STATIC_URL }}scripts/jquery-1.9.1.min.js"></script>-->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+{{ block.super }}
 {% endblock scripts %}
 
 {% block main %}
 {{ block.super }}
 
 <div id="formSection">
-  <form action="" type="POST" onsubmit="search(); return false;">
-    <label for="query">Search:</label>
-    <input type="text" id="searchInput" name="query" />
-    <button type="button" onclick="search()">Submit</button>
+  <form action="" type="POST" class="form-inline" onsubmit="search(); return false;">
+    <div class="form-group">
+      <label for="query">Search:</label>
+      <input type="text" id="searchInput" class="" name="query" />
+    </div>
+    <button type="button" class="btn btn-default" onclick="search()">Submit</button>
   </form>
 </div>
 

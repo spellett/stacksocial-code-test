@@ -4,10 +4,12 @@ from django.conf.urls import patterns, include, url
 # from django.contrib import admin
 # admin.autodiscover()
 
-urlpatterns = patterns('',
-    url(r'^$', 'stacksocial.views.index', name='index'),
-    url(r'termSearch/$', 'stacksocial.views.term_tweets', name='term_page'),
-    url(r'user/(?P<handle>[\w]+)/$', 'stacksocial.views.user_tweets', name='user_page'),
+urlpatterns = patterns('stacksocial.views',
+    url(r'^$', 'index', name='index'),
+    url(r'termSearch/$', 'term_tweets', name='term_page'),
+    url(r'user/(?P<handle>[\w]+)/$', 'user_tweets', name='user_page'),
+    url(r'test/$', 'test_form', name='test_form'),
+    #url(r'uploadDocument/$', 'upload_doc', name='upload_doc_page'),
     # Examples:
     # url(r'^$', 'stacksocial.views.home', name='home'),
     # url(r'^stacksocial/', include('stacksocial.foo.urls')),
